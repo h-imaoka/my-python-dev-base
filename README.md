@@ -13,3 +13,4 @@ dc exec dev bash
 # poetry init
 # poetry add boto3
 # poetry add mypy --dev
+# poetry export -f requirements.txt  --output requirements.txt
