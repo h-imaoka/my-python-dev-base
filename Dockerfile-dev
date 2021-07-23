@@ -1,0 +1,22 @@
+FROM python:3.8-buster
+
+RUN apt update && \
+    apt install -y vim docker.io -y
+
+# aws-cli
+RUN cd /tmp && \
+    curl -f "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    ./aws/install && \
+    rm -rf /tmp/*
+
+SHELL ["/bin/bash", "-c"]
+
+# poetry
+ENV PATH="/root/.poetry/bin:$PATH"
+RUN curl -sSLf https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py > get-poetry.py &&  \
+    python get-poetry.py --preview --yes --version=1.0.5
+
+WORKDIR /app
+
+CMD ["/bin/bash"]

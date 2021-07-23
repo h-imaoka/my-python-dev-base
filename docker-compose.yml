@@ -1,0 +1,35 @@
+version: '2'
+services:
+  # 開発用
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    volumes:
+      - .:/app/
+      - ./secrets:/secrets
+      # - /var/run/docker.sock:/var/run/docker.sock
+      - ~/.aws:/root/.aws
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_REGION
+      - AWS_DEFAULT_REGION
+      - AWS_PROFILE
+    tty: true
+    stdin_open: true
+
+  # 実行+push用
+  app:
+    build: .
+    volumes:
+      - .:/app/
+      - ~/.aws:/root/.aws
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_REGION
+      - AWS_DEFAULT_REGION
+      - AWS_PROFILE
+    tty: true
+    stdin_open: true
